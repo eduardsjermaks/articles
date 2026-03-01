@@ -52,4 +52,4 @@ The approach in this series is therefore:
 1. Extract and formalize the system’s behavior.
 2. Apply an incremental (Strangler-style) migration anchored to that specification.
 
-The goal is not code generation. The goal is behavioral clarity.
+The goal is not code generation, but behavioral clarity.
