@@ -99,4 +99,4 @@ For each flow:
 ## 12. First 90 minutes checklist
 - Steps to become productive quickly
 
-Start now. First, list the repository’s top-level tree and identify entrypoints. Then write the README.generated.md.
+Start now. First, list the repository’s top-level tree and identify entrypoints. Then write the README.generated-opus.md
