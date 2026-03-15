@@ -1,6 +1,11 @@
 
 https://chatgpt.com/c/699b1c87-efe4-8396-bc03-db0b71093e3b
 
+codex: 
+5.4
+medium 
+-- 14 min
+
 You are a senior software engineer and tech lead doing a first-pass “project orientation” review.
 
 Goal:
@@ -87,4 +92,4 @@ For each flow:
 ## 12. First 90 minutes checklist
 - Steps to become productive quickly
 
-Start now. First, list the repository’s top-level tree and identify entrypoints. Then write the README.generated.md.
+Start now. First, list the repository’s top-level tree and identify entrypoints. Then write the README.generated-gpt.md
