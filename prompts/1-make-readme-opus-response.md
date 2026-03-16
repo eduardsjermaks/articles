@@ -1,7 +1,4 @@
 
-10 min
-
-
 # Project Orientation (Generated)
 
 > **Generated**: 2026-03-01 | **Repo**: eShopOnWeb | **Framework**: ASP.NET Core 8.0  
