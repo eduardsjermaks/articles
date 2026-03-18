@@ -1,6 +1,6 @@
 
 10 min
-
+Opus 4.6 Claude code
 
 # Project Orientation (Generated)
 

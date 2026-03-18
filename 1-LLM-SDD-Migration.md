@@ -75,3 +75,164 @@ The approach in this series is therefore:
 The goal is not to automate migration.
 
 The goal is to make migration more predictable when the system is not fully understood.
+
+
+
+# Using AI-as-Judge to Compare LLM Codebase Analysis
+
+When comparing outputs from different LLM tools, subjective reading is unreliable.  
+To make the comparison reproducible, I used an **AI-as-judge approach with a fixed rubric**, where two generated documents were evaluated against the same criteria.
+
+Each run compared two documents produced by different tools, and the judge selected which one produced **better codebase analysis**.
+
+The judge model used in all runs was **Gemini 3 Pro**.
+
+---
+
+## Reference table
+
+| Run | Result file | Document A | Document B | AI as Judge |
+|------|------------|-----------|-----------|------------|
+| Run 1 | 1-ai-judge-prompt | Codex with medium (5.4) | Claude Code | Gemini 3 Pro |
+| Run 2 | 1-ai-judge-vs-code-auto-vs-codex | Codex with medium (5.4) | VSCode default auto mode (GPT-5.4 Opus) | Gemini 3 Pro |
+| Run 3 | 1-ai-judge-gemini-prompt-extra | Codex with medium (5.4) | Codex with extra thinking (5.4) | Gemini 3 Pro |
+
+---
+
+## Judge rubric
+
+Same rubric used in all runs:
+
+| Criterion |
+|-----------|
+| Evidence grounding |
+| Structural accuracy |
+| Dependency mapping |
+| Critical flow identification |
+| Migration insight quality |
+| Epistemic discipline |
+| Signal-to-noise ratio |
+| Final verdict |
+
+Goal: compare **quality of codebase understanding**, not writing style.
+
+---
+
+## Run 1  
+Codex (medium) vs Claude Code
+
+| Criterion | Codex medium | Claude Code | Winner |
+|-----------|-------------|-------------|--------|
+| Evidence grounding | 5 | 3 | A |
+| Structural accuracy | 5 | 3 | A |
+| Dependency mapping | 4 | 5 | B |
+| Critical flow | 5 | 4 | A |
+| Migration insight | 5 | 4 | A |
+| Epistemic discipline | 5 | 4 | A |
+| Signal / noise | 5 | 3 | A |
+| Final verdict | — | — | A |
+
+Result: Codex medium produced more precise and grounded codebase analysis.
+
+---
+
+## Run 2  
+Codex (medium) vs VSCode Auto (GPT-5.4 Opus)
+
+| Criterion | Codex medium | VSCode Auto | Winner |
+|-----------|-------------|-------------|--------|
+| Evidence grounding | 5 | 3 | A |
+| Structural accuracy | 5 | 4 | A |
+| Dependency mapping | 5 | 4 | A |
+| Critical flow | 5 | 3 | A |
+| Migration insight | 5 | 2 | A |
+| Epistemic discipline | 5 | 2 | A |
+| Signal / noise | 5 | 3 | A |
+| Final verdict | — | — | A |
+
+Result: Codex medium produced more grounded analysis with fewer assumptions.
+
+---
+
+## Run 3  
+Codex (medium) vs Codex (extra thinking)
+
+| Criterion | Medium | Extra thinking | Winner |
+|-----------|---------|----------------|--------|
+| Evidence grounding | 5 | 5 | A/B |
+| Structural accuracy | 5 | 5 | A/B |
+| Dependency mapping | 4 | 5 | B |
+| Critical flow | 5 | 5 | A/B |
+| Migration insight | 4 | 5 | B |
+| Epistemic discipline | 5 | 5 | A/B |
+| Signal / noise | 3 | 5 | B |
+| Final verdict | — | — | B |
+
+Result: Extra thinking produced deeper architectural analysis,  
+but improvements appeared only in some rubric categories.
+
+---
+
+## Important observation — extra thinking helped only in some areas
+
+Extra thinking improved mainly:
+
+- dependency mapping  
+- migration insight  
+- architectural context  
+- signal-to-noise quality  
+
+No significant improvement in:
+
+- evidence grounding  
+- structural accuracy  
+- flow tracing  
+- epistemic discipline  
+
+This means extra reasoning mainly helps with **interpretation**, not with raw extraction.
+
+---
+
+## Runtime comparison
+
+| Mode | Time |
+|------|--------|
+| Codex medium | ~14 min |
+| Codex extra thinking | ~30 min |
+
+Extra thinking took more than 2× longer,  
+while improvement was limited to some rubric categories.
+
+This is important in real workflows where analysis must be repeated many times.
+
+---
+
+## Aggregated summary
+
+| Run | A | B | Winner |
+|-----|----|----|--------|
+| Run 1 | Codex medium | Claude Code | A |
+| Run 2 | Codex medium | VSCode Auto | A |
+| Run 3 | Codex medium | Codex extra thinking | B |
+
+---
+
+## Key conclusions
+
+AI-as-judge worked well, but results depended strongly on generation mode.
+
+Findings:
+
+- Medium thinking produced very reliable grounded analysis  
+- Extra thinking improved architectural reasoning  
+- Default agent mode produced more assumptions  
+- Judge must use a fixed rubric, otherwise results change  
+
+In practice, the most stable workflow was:
+
+1. Generate analysis with multiple tools  
+2. Compare using a fixed rubric  
+3. Use AI judge (Gemini 3 Pro)  
+4. Inspect differences manually  
+
+This approach made codebase exploration much more predictable when working with unknown projects.
