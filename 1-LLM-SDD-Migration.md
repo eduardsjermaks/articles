@@ -6,35 +6,39 @@ Specifications are missing or outdated. Tests are incomplete. Business rules are
 
 Legacy systems rarely fail because of syntax or frameworks. They fail because their behavior is undocumented and poorly understood. This misunderstanding of behavior and requirements becomes even more important when development is done with agents.
 
-With strong LLM agents, we increasingly see these shifts in engineering work:
+With strong LLM agents, the distribution of engineering effort starts to shift.
 
-coding ↓↓↓  
-debugging ↓ slightly  
-testing ↑  
-design ↑  
-specs ↑  
-review ↑↑
+Less time is spent on writing code, while more time moves to validation, design, and decision-making:
 
-Most real bugs come from wrong requirements. Agents cannot guarantee domain correctness.
+- coding ↓↓↓  
+- debugging ↓  
+- testing ↑  
+- design ↑  
+- specs ↑  
+- review ↑↑  
 
-Agents can generate tests, but they often mirror the same mistake as the code. LLMs are good locally, but weaker globally.
+The reason is simple — most real bugs are not syntax errors, but requirement errors.  
+Agents can generate code, but they cannot guarantee domain correctness — meaning the system behaves according to real business rules and constraints, not just syntax, types, or passing tests.
 
-Hard problems remain:
+They can also generate tests, yet those tests often reproduce the same wrong assumptions as the implementation.  
+LLMs are strong at local reasoning, but much weaker at global system understanding.
 
-service boundaries  
-data ownership  
-consistency models  
-failure handling  
-backward compatibility  
-performance tradeoffs
+Because of that, the hardest problems remain architectural rather than syntactic:
 
-These still require experience.
+- service boundaries  
+- data ownership  
+- consistency models  
+- failure handling  
+- backward compatibility  
+- performance tradeoffs  
 
-Even today, agents struggle with:
+These decisions require context, experience, and understanding of the whole system.
 
-large refactors  
-multi-service changes  
-long-term evolution
+Even with modern agents, several types of changes are still difficult:
+
+- large refactors  
+- multi-service changes  
+- long-term evolution
 
 ## Alternative: Using the Full Context Window
 
