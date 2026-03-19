@@ -6,9 +6,22 @@ Specifications are missing or outdated. Tests are incomplete. Business rules are
 
 Legacy systems rarely fail because of syntax or frameworks. They fail because their behavior is undocumented and poorly understood. This misunderstanding of behavior and requirements becomes even more important when development is done with agents.
 
+In this series, I explore how LLM tooling can assist in migrating existing systems — not by blindly rewriting code, but by helping engineers understand, analyze, and safely transform unfamiliar codebases.
+
+The focus is on cross-stack migration, where a system must be moved to a different technology stack due to vendor strategy, platform constraints, or organizational decisions. In these situations, the hardest part is usually not the target framework, but the lack of reliable knowledge about the current system.
+
+Tools such as VS Code Copilot, Codex, Claude Code, and similar agent-style assistants introduce a new way of working with legacy code. Instead of treating migration as a purely manual reverse-engineering effort, we can use LLMs as interactive tools to explore the codebase, reconstruct intent, and guide the transition step by step.
+
+The question is:
+
+> How can LLM tooling help us migrate systems more safely?
+
+
+## Shift in Engineering Work with LLM Agents
+
 With strong LLM agents, the distribution of engineering effort starts to shift.
 
-Less time is spent on writing code, while more time moves to validation, design, and decision-making:
+Less time is spent writing code, while more time moves to validation, design, and decision-making:
 
 - coding ↓↓↓  
 - debugging ↓  
@@ -20,7 +33,7 @@ Less time is spent on writing code, while more time moves to validation, design,
 The reason is simple — most real bugs are not syntax errors, but requirement errors.  
 Agents can generate code, but they cannot guarantee domain correctness — meaning the system behaves according to real business rules and constraints, not just syntax, types, or passing tests.
 
-They can also generate tests, yet those tests often reproduce the same wrong assumptions as the implementation.  
+Agents can also generate tests, yet those tests often reproduce the same wrong assumptions as the implementation.  
 LLMs are strong at local reasoning, but much weaker at global system understanding.
 
 Because of that, the hardest problems remain architectural rather than syntactic:
@@ -40,6 +53,7 @@ Even with modern agents, several types of changes are still difficult:
 - multi-service changes  
 - long-term evolution
 
+
 ## Alternative: Using the Full Context Window
 
 Putting the entire codebase into the LLM context may seem attractive, but it works poorly for non-trivial projects. For larger systems, **agentic workflows become necessary**.
@@ -53,18 +67,14 @@ And the downside is not only cost.
 
 Large context windows help, but they do not replace structured, incremental analysis.
 
-This is where modern LLM tooling becomes interesting. In this series, I explore how it can assist in migrating existing systems — not by blindly rewriting code, but by helping engineers understand, analyze, and safely transform unfamiliar codebases.
 
-The focus is on cross-stack migration, where a system must be moved to a different technology stack due to vendor strategy, platform constraints, or organizational decisions. In these situations, the hardest part is usually not the target framework, but the lack of reliable knowledge about the current system.
+## 1. Setting the Scene
 
-Tools such as VS Code Copilot, Codex, Claude Code, and similar agent-style assistants introduce a new way of working with legacy code. Instead of treating migration as a purely manual reverse-engineering effort, we can use LLMs as interactive tools to explore the codebase, reconstruct intent, and guide the transition step by step.
+For this series, we will use **eShopOnWeb** as the legacy system.
 
-The question is:
+[https://github.com/dotnet-architecture/eShopOnWeb](https://github.com/dotnet-architecture/eShopOnWeb)
 
-> How can LLM tooling help us migrate systems more safely?
-
-
-## Codebase Overview
+### Codebase Overview
 
 - ~5.3k lines of production C# in `src`
 - ~12.5k total lines across C#, Razor, CSS, SCSS, and Bicep
@@ -77,14 +87,6 @@ The question is:
 
 Overall complexity is **moderate**.  
 The codebase is not large in raw size, but the architectural scope is non-trivial: it includes a web app, public API, Blazor admin UI, separated core/infrastructure layers, infrastructure-as-code, and multiple test projects.
-
----
-
-## 1. Setting the Scene
-
-For this series, we will use **eShopOnWeb** as the legacy system.
-
-[https://github.com/dotnet-architecture/eShopOnWeb](https://github.com/dotnet-architecture/eShopOnWeb)
 
 The repository is archived and no longer actively maintained, which makes it a stable candidate for experimentation. The intent is not to criticize the original design, but to use a realistic codebase to evaluate different migration approaches.
 
