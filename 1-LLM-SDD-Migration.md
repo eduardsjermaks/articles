@@ -4,7 +4,62 @@ Most migrations fail before they start — because nobody actually knows what th
 
 Specifications are missing or outdated. Tests are incomplete. Business rules are scattered across the codebase. Refactoring feels risky because the behavioral surface of the system is unclear.
 
-Legacy systems rarely fail because of syntax or frameworks. They fail because their behavior is undocumented and poorly understood.
+Legacy systems rarely fail because of syntax or frameworks. They fail because their behavior is undocumented and poorly understood. 
+This behavior and requirements misunderstanding becomes more important for development with agents. 
+
+
+Because With strong LLM agents - we see these trends: 
+
+coding ↓↓↓
+
+debugging ↓ slightly
+
+testing ↑
+
+design ↑
+
+specs ↑
+
+review ↑↑
+
+
+Most real bugs are wrong requirement. Agents cannot guarantee domain correctness.
+
+
+Agents can generate tests, but they often mirror the same mistake as the code. LLMs are good locally, weaker globally.
+
+Hard problems:
+service boundaries
+data ownership
+consistency models
+failure handling
+backward compatibility
+performance tradeoffs
+
+These require experience.
+
+Even today, agents struggle with:
+
+large refactors
+multi-service changes
+long-term evolution
+
+
+## Alternative: Using the Full Context Window
+
+Putting the entire codebase into the LLM context may seem attractive, but it works poorly for non-trivial projects.  
+For larger systems, **agentic workflows become necessary**.
+
+The problem is not only cost.
+
+- **Signal dilution** — tests, migrations, DTOs, generated files, and CSS can drown out the real architecture.
+- **Worse summaries** — the model may miss important relationships because attention is spread too thin.
+- **Less room for reasoning** — large context leaves less space for the actual question and response.
+- **Noise bias** — snapshots, migrations, and duplicated patterns can skew the model’s understanding.
+- **Slow iteration** — every follow-up requires resending a very large prompt.
+
+Large context windows help, but they do not replace structured, incremental analysis.
+
 
 In this series, I explore how modern LLM tooling can assist in migrating existing systems — not by blindly rewriting code, but by helping engineers understand, analyze, and safely transform unfamiliar codebases.
 
@@ -12,12 +67,23 @@ The focus is on cross-stack migration, where a system must be moved to a differe
 
 Tools such as VS Code Copilot, Codex, Claude Code, and similar agent-style assistants introduce a new way of working with legacy code. Instead of treating migration as a purely manual reverse-engineering effort, we can use LLMs as interactive tools to explore the codebase, reconstruct intent, and guide the transition step by step.
 
-The goal of this series is not automatic replatforming, and not one-click migration.
-The goal is controlled migration driven by understanding.
+The question is
+> How can LLM tooling help us migrate systems more safely?
 
-The central question is:
 
-> Can LLM tooling help us migrate systems more safely when the original design is only partially known?
+## Codebase Overview
+
+- ~5.3k lines of production C# in `src`
+- ~12.5k total lines across C#, Razor, CSS, SCSS, and Bicep
+- 10 projects total: 6 production, 4 test
+- ~194 production classes and 16 interfaces
+- ~52 test cases
+- 8 public API endpoints
+- 4 MVC controllers
+- 16 Razor Page models
+
+Overall complexity is **moderate**.  
+The codebase is not large in raw size, but the architectural scope is non-trivial: it includes a web app, public API, Blazor admin UI, separated core/infrastructure layers, infrastructure-as-code, and multiple test projects.
 
 ---
 
