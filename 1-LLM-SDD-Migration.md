@@ -21,14 +21,7 @@ The question is:
 
 With strong LLM agents, the distribution of engineering effort starts to shift.
 
-Less time is spent writing code, while more time moves to validation, design, and decision-making:
-
-- coding ↓↓↓  
-- debugging ↓  
-- testing ↑  
-- design ↑  
-- specs ↑  
-- review ↑↑  
+Less time is spent writing code, while more time moves to validation, specs, design, and review.
 
 The reason is simple — most real bugs are not syntax errors, but requirement errors.  
 Agents can generate code, but they cannot guarantee domain correctness — meaning the system behaves according to real business rules and constraints, not just syntax, types, or passing tests.
