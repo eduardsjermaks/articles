@@ -152,6 +152,15 @@ Codex medium thinking (GPT-5.4) vs Claude Code (Opus 4.6)
 
 Result: Codex medium produced more precise and grounded codebase analysis.
 
+
+Claude Code produced very good tables and correctly detected the `ApplicationCore → BlazorShared` dependency, calling it a domain-layer contamination hotspot, which is a meaningful architectural finding.
+
+However, it lost points in structural accuracy due to inferred runtime details.  
+Example:
+> "Web — Single ASP.NET Core process hosting: MVC controllers, Razor Pages, Blazor Server circuit, and serving the BlazorAdmin WASM bundle."
+
+This mixes Blazor Server runtime with static WASM hosting and was not fully grounded in the code.
+
 ---
 
 ## Run 2  
@@ -168,6 +177,21 @@ Codex medium thinking (GPT-5.4) vs VSCode default auto mode (GPT-5.4, Opus 4.6, 
 | Signal / noise | 5 | 3 |
 
 Result: Codex medium produced more grounded analysis with fewer assumptions.
+
+
+VSCode default auto mode often stopped at the first layer instead of tracing real execution paths.
+
+Example:
+
+> "Failure modes: Unknown (no explicit exception handling in this page model)..."
+
+Failure modes were left unresolved instead of following the call chain.
+
+Migration insight also contained generic or speculative statements without code evidence.
+
+Example:
+
+> "Cyclic dependencies — why risky: Unknown. evidence: Unknown."
 
 ---
 
@@ -197,7 +221,7 @@ It also detected an issue in retry configuration where the retry logic may not b
 Extra thinking also showed stronger architectural reasoning.  
 For example, it pointed out a layering anomaly that medium thinking missed:
 
-*Justification:* It maps the standard internal dependencies well but fails to spot the architectural anomaly where the inner domain (`ApplicationCore`) references a UI-adjacent library (`BlazorShared`).
+> *Justification:* It maps the standard internal dependencies well but fails to spot the architectural anomaly where the inner domain (`ApplicationCore`) references a UI-adjacent library (`BlazorShared`).
 
 ---
 
