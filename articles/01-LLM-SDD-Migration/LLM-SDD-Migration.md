@@ -138,54 +138,54 @@ Goal: compare **quality of codebase understanding**
 ---
 
 ## Run 1  
-Codex (medium) vs Claude Code
+Codex medium thinking (GPT-5.4) vs Claude Code (Opus 4.6) 
 
-| Criterion | Codex medium | Claude Code | Winner |
-|-----------|-------------|-------------|--------|
-| Evidence grounding | 5 | 3 | A |
-| Structural accuracy | 5 | 3 | A |
-| Dependency mapping | 4 | 5 | B |
-| Critical flow | 5 | 4 | A |
-| Migration insight | 5 | 4 | A |
-| Epistemic discipline | 5 | 4 | A |
-| Signal / noise | 5 | 3 | A |
-| Final verdict | — | — | A |
+| Criterion | Codex | Claude Code |
+|-----------|-------------|-------------|
+| Evidence grounding | 5 | 3 |
+| Structural accuracy | 5 | 3 |
+| Dependency mapping | 4 | 5 |
+| Critical flow | 5 | 4 |
+| Migration insight | 5 | 4 |
+| Epistemic discipline | 5 | 4 |
+| Signal / noise | 5 | 3 |
+| Final verdict | — | — |
 
 Result: Codex medium produced more precise and grounded codebase analysis.
 
 ---
 
 ## Run 2  
-Codex (medium) vs VSCode Auto (GPT-5.4 Opus)
+Codex medium thinking (GPT-5.4) vs VSCode default auto mode (GPT-5.4, Opus 4.6, Sonnet 4.6)
 
-| Criterion | Codex medium | VSCode Auto | Winner |
-|-----------|-------------|-------------|--------|
-| Evidence grounding | 5 | 3 | A |
-| Structural accuracy | 5 | 4 | A |
-| Dependency mapping | 5 | 4 | A |
-| Critical flow | 5 | 3 | A |
-| Migration insight | 5 | 2 | A |
-| Epistemic discipline | 5 | 2 | A |
-| Signal / noise | 5 | 3 | A |
-| Final verdict | — | — | A |
+| Criterion | Codex | VSCode |
+|-----------|-------------|-------------|
+| Evidence grounding | 5 | 3 |
+| Structural accuracy | 5 | 4 |
+| Dependency mapping | 5 | 4 |
+| Critical flow | 5 | 3 |
+| Migration insight | 5 | 2 |
+| Epistemic discipline | 5 | 2 |
+| Signal / noise | 5 | 3 |
+| Final verdict | — | — |
 
 Result: Codex medium produced more grounded analysis with fewer assumptions.
 
 ---
 
 ## Run 3  
-Codex (medium) vs Codex (extra thinking)
+Codex medium thinking (GPT-5.4) vs Codex extra thinking (GPT-5.4) 
 
-| Criterion | Medium | Extra thinking | Winner |
-|-----------|---------|----------------|--------|
-| Evidence grounding | 5 | 5 | A/B |
-| Structural accuracy | 5 | 5 | A/B |
-| Dependency mapping | 4 | 5 | B |
-| Critical flow | 5 | 5 | A/B |
-| Migration insight | 4 | 5 | B |
-| Epistemic discipline | 5 | 5 | A/B |
-| Signal / noise | 3 | 5 | B |
-| Final verdict | — | — | B |
+| Criterion | Medium | Extra thinking |
+|-----------|---------|----------------|
+| Evidence grounding | 5 | 5 |
+| Structural accuracy | 5 | 5 |
+| Dependency mapping | 4 | 5 |
+| Critical flow | 5 | 5 |
+| Migration insight | 4 | 5 |
+| Epistemic discipline | 5 | 5 |
+| Signal / noise | 3 | 5 |
+| Final verdict | — | — |
 
 Result: Extra thinking produced deeper architectural analysis,  
 but improvements appeared only in some rubric categories.
