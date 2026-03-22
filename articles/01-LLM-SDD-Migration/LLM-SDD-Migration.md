@@ -98,11 +98,11 @@ The judge model used in all runs was **Gemini 3 Pro**.
 
 ## Reference table
 
-| Run | Result file | Document A | Document B |
-|------|------------|-----------|-----------|
-| Run 1 | 1-ai-judge-prompt | Codex with medium (5.4) | Claude Code |
-| Run 2 | 1-ai-judge-vs-code-auto-vs-codex | Codex with medium (5.4) | VSCode default auto mode (GPT-5.4 Opus) |
-| Run 3 | 1-ai-judge-gemini-prompt-extra | Codex with medium (5.4) | Codex with extra thinking (5.4) |
+| Run | Prompt file | Result file | Document A | Document B |
+|------|------------|------------|-----------|-----------|
+| Run 1 | [1-ai-judge-prompt](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/ai-judge/1-ai-judge-prompt.md) | [1-ai-judge-prompt-result](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/ai-judge/results/1-ai-judge-result.md) | Codex with medium (5.4) | Claude Code |
+| Run 2 | [1-ai-judge-vs-code-auto-vs-codex](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/ai-judge/1-ai-judge-vs-code-auto-vs-codex.md) | [1-ai-judge-vs-code-auto-vs-codex-result](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/ai-judge/results/1-ai-judge-vs-code-auto-vs-codex-result.md) | Codex with medium (5.4) | VSCode default auto mode (GPT-5.4, Opus 4.6, Sonnet 4.6) |
+| Run 3 | [1-ai-judge-gemini-prompt-extra](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/ai-judge/1-ai-judge-gemini-prompt-extra.md) | [1-ai-judge-gemini-prompt-extra-result](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/ai-judge/1-ai-judge-gemini-prompt-extra.md) | Codex with medium (5.4) | Codex with extra thinking (5.4) |
 
 ---
 

@@ -1,6 +1,3 @@
-
-https://chatgpt.com/c/699b1c87-efe4-8396-bc03-db0b71093e3b
-
 You are a senior software engineer and tech lead doing a first-pass “project orientation” review.
 
 Goal:

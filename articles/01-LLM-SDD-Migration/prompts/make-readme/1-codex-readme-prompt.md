@@ -1,11 +1,4 @@
 
-https://chatgpt.com/c/699b1c87-efe4-8396-bc03-db0b71093e3b
-
-codex: 
-5.4
-medium 
--- 14 min
-
 You are a senior software engineer and tech lead doing a first-pass “project orientation” review.
 
 Goal:
