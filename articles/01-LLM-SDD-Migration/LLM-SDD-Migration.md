@@ -223,25 +223,7 @@ For example, it pointed out a layering anomaly that medium thinking missed:
 
 > *Justification:* It maps the standard internal dependencies well but fails to spot the architectural anomaly where the inner domain (`ApplicationCore`) references a UI-adjacent library (`BlazorShared`).
 
----
-
-## Important observation — extra thinking helped only in some areas
-
-Extra thinking improved mainly:
-
-- dependency mapping  
-- migration insight  
-- architectural context  
-- signal-to-noise quality  
-
-No significant improvement in:
-
-- evidence grounding  
-- structural accuracy  
-- flow tracing  
-- epistemic discipline  
-
-This means extra reasoning mainly helps with **interpretation**, not with raw extraction.
+Possible explanation is that extra reasoning mainly helps with **interpretation** instead of raw extraction.
 
 ---
 
