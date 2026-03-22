@@ -4,9 +4,7 @@ Most migrations fail before they start — because nobody actually knows what th
 
 Legacy systems rarely fail because of syntax or frameworks. They fail because their behavior is undocumented and poorly understood. This lack of understanding becomes even more critical when development is done with agents.
 
-In this series, I explore how LLM tooling can assist in migrating existing systems — not by blindly rewriting code, but by helping engineers understand, analyze, and safely transform unfamiliar codebases.
-
-The focus is on cross-stack migration, where a system must be moved to a different technology stack due to platform, vendor, or organizational constraints. In these cases, the hardest part is usually incomplete knowledge of the current system.
+In this series, I explore how LLM tooling can assist in migrating existing systems. The focus is on cross-stack migration, where a system must be moved to a different technology stack due to platform, vendor, or organizational constraints. In these cases, the hardest part is usually incomplete knowledge of the current system.
 
 Tools such as Copilot, Codex, Claude Code, and similar agents make it possible to explore a codebase interactively, summarize its structure, and trace important flows instead of relying only on manual reverse engineering.
 
@@ -232,8 +230,7 @@ Possible explanation is that extra reasoning mainly helps with **interpretation*
 | Codex extra thinking | ~30 min |
 | VSCode | ~5 min |
 
-Extra thinking took more than 2× longer,  
-while improvement was limited to some rubric categories.
+Extra thinking took more than 2× longer than medium thinking, while improvement was limited to some rubric categories.
 
 This is important in real workflows where analysis must be repeated many times.
 
