@@ -35,7 +35,7 @@ The downside is not only cost.
 - **Slow iteration** — every follow-up requires resending a very large prompt.
 
 
-## 1. Setting the Scene
+## Setting the Scene
 
 For this series, we will use **eShopOnWeb** as the legacy system.
 
