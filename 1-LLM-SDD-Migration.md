@@ -4,7 +4,7 @@ Most migrations fail before they start — because nobody actually knows what th
 
 Specifications are missing or outdated. Tests are incomplete. Business rules are scattered across the codebase. Refactoring feels risky because the behavioral surface of the system is unclear.
 
-Legacy systems rarely fail because of syntax or frameworks. They fail because their behavior is undocumented and poorly understood. This misunderstanding of behavior and requirements becomes even more important when development is done with agents.
+Legacy systems rarely fail because of syntax or frameworks. They fail because their behavior is undocumented and poorly understood. This lack of understanding becomes even more critical when development is done with agents.
 
 In this series, I explore how LLM tooling can assist in migrating existing systems — not by blindly rewriting code, but by helping engineers understand, analyze, and safely transform unfamiliar codebases.
 
@@ -12,60 +12,34 @@ The focus is on cross-stack migration, where a system must be moved to a differe
 
 Tools such as VS Code Copilot, Codex, Claude Code, and similar agent-style assistants introduce a new way of working with legacy code. Instead of treating migration as a purely manual reverse-engineering effort, we can use LLMs as interactive tools to explore the codebase, reconstruct intent, and guide the transition step by step.
 
-The question is:
-
-> How can LLM tooling help us migrate systems more safely?
-
 
 ## Shift in Engineering Work with LLM Agents
 
-With strong LLM agents, the distribution of engineering effort starts to shift.
-
+With strong LLM agents, the distribution of engineering effort starts to shift.  
 Less time is spent writing code, while more time moves to validation, specs, design, and review.
 
-The reason is simple — most real bugs are not syntax errors, but requirement errors.  
-Agents can generate code, but they cannot guarantee domain correctness — meaning the system behaves according to real business rules and constraints, not just syntax, types, or passing tests.
+Agents can generate code, but they cannot guarantee domain correctness — the system may pass tests while still violating business rules or real-world constraints.  
+Most real bugs are not syntax errors, but misunderstood requirements, missing system context, and edge cases.
 
-Agents can also generate tests, yet those tests often reproduce the same wrong assumptions as the implementation.  
-LLMs are strong at local reasoning, but much weaker at global system understanding.
-
-Because of that, the hardest problems remain architectural rather than syntactic:
-
-- service boundaries  
-- data ownership  
-- consistency models  
-- failure handling  
-- backward compatibility  
-- performance tradeoffs  
-
-These decisions require context, experience, and understanding of the whole system.
-
-Even with modern agents, several types of changes are still difficult:
-
-- large refactors  
-- multi-service changes  
-- long-term evolution
-
+Even with modern agents, some types of changes remain difficult: large refactors, multi-service changes, and long-term evolution.
 
 ## Alternative: Using the Full Context Window
 
-Putting the entire codebase into the LLM context may seem attractive, but it works poorly for non-trivial projects. For larger systems, **agentic workflows become necessary**.
+Putting the entire codebase into the LLM context may seem attractive, but it works poorly for non-trivial projects. For larger systems, agentic workflows become necessary.
 
-And the downside is not only cost.
+The downside is not only cost.
 
 - **Signal dilution** — tests, migrations, DTOs, generated files, and CSS can drown out the real architecture, and the model may miss important relationships because attention is spread too thin.
 - **Less room for reasoning** — large context leaves less space for the actual question and the response.
 - **Noise bias** — snapshots, migrations, and duplicated patterns can skew the model’s understanding.
 - **Slow iteration** — every follow-up requires resending a very large prompt.
 
-Large context windows help, but they do not replace structured, incremental analysis.
-
 
 ## 1. Setting the Scene
 
 For this series, we will use **eShopOnWeb** as the legacy system.
 
-[https://github.com/dotnet-architecture/eShopOnWeb](https://github.com/dotnet-architecture/eShopOnWeb)
+https://github.com/dotnet-architecture/eShopOnWeb
 
 ### Codebase Overview
 
@@ -81,9 +55,9 @@ For this series, we will use **eShopOnWeb** as the legacy system.
 Overall complexity is **moderate**.  
 The codebase is not large in raw size, but the architectural scope is non-trivial: it includes a web app, public API, Blazor admin UI, separated core/infrastructure layers, infrastructure-as-code, and multiple test projects.
 
-The repository is archived and no longer actively maintained, which makes it a stable candidate for experimentation. The intent is not to criticize the original design, but to use a realistic codebase to evaluate different migration approaches.
+The repository is archived and no longer actively maintained, which makes it a good candidate for experimentation. The intent is not to criticize the original design, but to use a realistic codebase to evaluate different migration approaches.
 
-We will assume a migration to **Java (Spring Boot)** for the backend and **React** for the frontend.
+We will assume a migration to **Java (Spring Boot)** for the backend and **React** for the frontend.  
 This is a hypothetical cross-stack scenario used to simulate real-world situations such as vendor strategy changes, platform standardization, or team skill constraints.
 
 During the series, different LLM-assisted workflows will be explored, including:
@@ -92,45 +66,24 @@ During the series, different LLM-assisted workflows will be explored, including:
 * Codex
 * Claude Code
 
-The objective is not to prove that one tool is better, but to observe how different tools behave when working with an unfamiliar system.
-
----
-
-## Migration Strategy
-
-For the migration itself, we will assume an incremental approach similar to the Strangler pattern.
-
-Instead of rewriting everything at once, parts of the system are replaced gradually while the original system continues to run. This is a common strategy in real projects where full rewrites are too risky.
-
 ---
 
 ## Working Assumption
 
-LLMs do not remove the risks of migration.
-
-They can misunderstand intent, invent abstractions, or overlook important details.
+LLMs can misunderstand intent, invent abstractions, or overlook important details.  
 If used blindly, they can make a migration less safe instead of safer.
 
-However, when used as analysis and exploration tools, they can help:
+However, when used as analysis and exploration tools, they can help navigating unknown codebases:
 
-* navigate unknown codebases
 * summarize structure and dependencies
 * identify hidden assumptions
 * experiment with refactoring options
-* compare alternative implementations
 
 The approach in this series is therefore:
 
 1. Start with an unknown system.
 2. Use LLM tools to explore and understand its structure and behavior.
 3. Gradually transform the system toward a new stack.
-4. Observe how different tools help or fail during this process.
-
-The goal is not to automate migration.
-
-The goal is to make migration more predictable when the system is not fully understood.
-
-
 
 # Using AI-as-Judge to Compare LLM Codebase Analysis
 
@@ -145,11 +98,11 @@ The judge model used in all runs was **Gemini 3 Pro**.
 
 ## Reference table
 
-| Run | Result file | Document A | Document B | AI as Judge |
-|------|------------|-----------|-----------|------------|
-| Run 1 | 1-ai-judge-prompt | Codex with medium (5.4) | Claude Code | Gemini 3 Pro |
-| Run 2 | 1-ai-judge-vs-code-auto-vs-codex | Codex with medium (5.4) | VSCode default auto mode (GPT-5.4 Opus) | Gemini 3 Pro |
-| Run 3 | 1-ai-judge-gemini-prompt-extra | Codex with medium (5.4) | Codex with extra thinking (5.4) | Gemini 3 Pro |
+| Run | Result file | Document A | Document B |
+|------|------------|-----------|-----------|
+| Run 1 | 1-ai-judge-prompt | Codex with medium (5.4) | Claude Code |
+| Run 2 | 1-ai-judge-vs-code-auto-vs-codex | Codex with medium (5.4) | VSCode default auto mode (GPT-5.4 Opus) |
+| Run 3 | 1-ai-judge-gemini-prompt-extra | Codex with medium (5.4) | Codex with extra thinking (5.4) |
 
 ---
 
@@ -168,7 +121,7 @@ Same rubric used in all runs:
 | Signal-to-noise ratio |
 | Final verdict |
 
-Goal: compare **quality of codebase understanding**, not writing style.
+Goal: compare **quality of codebase understanding**
 
 ---
 
@@ -273,20 +226,12 @@ This is important in real workflows where analysis must be repeated many times.
 
 ## Key conclusions
 
-AI-as-judge worked well, but results depended strongly on generation mode.
-
 Findings:
 
-- Medium thinking produced very reliable grounded analysis  
-- Extra thinking improved architectural reasoning  
-- Default agent mode produced more assumptions  
-- Judge must use a fixed rubric, otherwise results change  
+- Codex medium thinking produced reliable, well-grounded analysis  
+- Codex extra thinking improved architectural reasoning  
+- Claude Code achieved similar results, with minor misinterpretations, but produced clear diagrams that made the structure easier to understand  
+- VSCode agent mode introduced more assumptions  
 
-In practice, the most stable workflow was:
-
-1. Generate analysis with multiple tools  
-2. Compare using a fixed rubric  
-3. Use AI judge (Gemini 3 Pro)  
-4. Inspect differences manually  
-
-This approach made codebase exploration much more predictable when working with unknown projects.
+This approach provided a quick initial overview of the project and highlighted critical areas in a short time.  
+The next step is to see whether this level of understanding is sufficient for the migration itself, or whether important parts are still missing.
