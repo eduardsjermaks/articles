@@ -149,7 +149,6 @@ Codex medium thinking (GPT-5.4) vs Claude Code (Opus 4.6)
 | Migration insight | 5 | 4 |
 | Epistemic discipline | 5 | 4 |
 | Signal / noise | 5 | 3 |
-| Final verdict | — | — |
 
 Result: Codex medium produced more precise and grounded codebase analysis.
 
@@ -167,7 +166,6 @@ Codex medium thinking (GPT-5.4) vs VSCode default auto mode (GPT-5.4, Opus 4.6, 
 | Migration insight | 5 | 2 |
 | Epistemic discipline | 5 | 2 |
 | Signal / noise | 5 | 3 |
-| Final verdict | — | — |
 
 Result: Codex medium produced more grounded analysis with fewer assumptions.
 
@@ -185,7 +183,6 @@ Codex medium thinking (GPT-5.4) vs Codex extra thinking (GPT-5.4)
 | Migration insight | 4 | 5 |
 | Epistemic discipline | 5 | 5 |
 | Signal / noise | 3 | 5 |
-| Final verdict | — | — |
 
 Result: Extra thinking produced deeper architectural analysis,  
 but improvements appeared only in some rubric categories.
