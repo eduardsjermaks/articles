@@ -228,9 +228,9 @@ This is important in real workflows where analysis must be repeated many times.
 
 | Run | A | B | Winner |
 |-----|----|----|--------|
-| Run 1 | Codex medium | Claude Code | A |
-| Run 2 | Codex medium | VSCode Auto | A |
-| Run 3 | Codex medium | Codex extra thinking | B |
+| Run 1 | Codex medium thinking (GPT-5.4) | Claude Code | Codex medium thinking (GPT-5.4) |
+| Run 2 | Codex medium thinking (GPT-5.4) | VSCode Auto | Codex medium thinking (GPT-5.4) |
+| Run 3 | Codex medium thinking (GPT-5.4) | Codex extra thinking (GPT-5.4)  | Codex extra thinking (GPT-5.4) |
 
 ---
 
