@@ -2,16 +2,13 @@
 
 Most migrations fail before they start — because nobody actually knows what the system does.
 
-Specifications are missing or outdated. Tests are incomplete. Business rules are scattered across the codebase. Refactoring feels risky because the behavioral surface of the system is unclear.
-
 Legacy systems rarely fail because of syntax or frameworks. They fail because their behavior is undocumented and poorly understood. This lack of understanding becomes even more critical when development is done with agents.
 
 In this series, I explore how LLM tooling can assist in migrating existing systems — not by blindly rewriting code, but by helping engineers understand, analyze, and safely transform unfamiliar codebases.
 
-The focus is on cross-stack migration, where a system must be moved to a different technology stack due to vendor strategy, platform constraints, or organizational decisions. In these situations, the hardest part is usually not the target framework, but the lack of reliable knowledge about the current system.
+The focus is on cross-stack migration, where a system must be moved to a different technology stack due to platform, vendor, or organizational constraints. In these cases, the hardest part is usually incomplete knowledge of the current system.
 
-Tools such as VS Code Copilot, Codex, Claude Code, and similar agent-style assistants introduce a new way of working with legacy code. Instead of treating migration as a purely manual reverse-engineering effort, we can use LLMs as interactive tools to explore the codebase, reconstruct intent, and guide the transition step by step.
-
+Tools such as Copilot, Codex, Claude Code, and similar agents make it possible to explore a codebase interactively, summarize its structure, and trace important flows instead of relying only on manual reverse engineering.
 
 ## Shift in Engineering Work with LLM Agents
 
