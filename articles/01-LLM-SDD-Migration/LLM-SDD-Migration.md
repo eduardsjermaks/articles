@@ -85,6 +85,24 @@ The approach in this series is therefore:
 2. Use LLM tools to explore and understand its structure and behavior.
 3. Gradually transform the system toward a new stack.
 
+## Experiment Setup
+
+To compare how different models analyze the same codebase, I used a fixed set of prompts and collected the responses produced by each model.
+
+Prompts were refined with ChatGPT to make them clear and neutral, so that differences in results come from the models, not from prompt wording.
+
+The table below shows the prompts used in the experiment and the corresponding results.
+
+| Prompt | Result |
+|--------|--------|
+| [1-codex-readme-prompt.md](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/make-readme/1-codex-readme-prompt.md) | [Codex (medium thinking) response](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/make-readme/responses/1-codex-readme-prompt-response.md) |
+| [1-codex-readme-prompt.md](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/make-readme/1-codex-readme-prompt.md) | [Codex (extra thinking) response](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/make-readme/responses/1-codex-readme-prompt-response-extra.md) |
+| [1-make-readme-opus.md](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/make-readme/1-make-readme-opus.md) | [Claude Code response](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/make-readme/responses/1-opus-readme-response.md) |
+| [1-vscode-readme-prompt.md](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/make-readme/1-vscode-readme-prompt.md) | [VSCode response](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/make-readme/responses/1-vscode-readme-response.md) |
+
+
+These responses are evaluated in the next section using an AI-as-Judge approach.
+
 # Using AI-as-Judge to Compare LLM Codebase Analysis
 
 When comparing outputs from different LLM tools, subjective reading is unreliable.  
@@ -106,20 +124,14 @@ The judge model used in all runs was **Gemini 3 Pro**.
 
 ---
 
-## Judge rubric
-
-Same rubric used in all runs:
-
-| Criterion |
-|-----------|
-| Evidence grounding |
-| Structural accuracy |
-| Dependency mapping |
-| Critical flow identification |
-| Migration insight quality |
-| Epistemic discipline |
-| Signal-to-noise ratio |
-| Final verdict |
+## Evaluation Rubric (Score 0–5 per category)
+1. **Evidence Grounding:** Does the document cite specific modules, files, or patterns rather than vague generalities?
+2. **Structural Accuracy:** Is the internal logic consistent? Do the described components actually fit together logically?
+3. **Dependency Mapping:** How well does it identify external integrations, internal coupling, and third-party libraries?
+4. **Critical Flow Identification:** Does it map the "Happy Path" of data through the system (Entry point -> Logic -> Storage)?
+5. **Migration Insight Quality:** Does it identify technical debt, "gotchas," legacy patterns, or risks that would impact a migration?
+6. **Epistemic Discipline:** How does it handle uncertainty? Does it clearly distinguish between known facts ("The system does X") and assumptions ("The system appears to do X")?
+7. **Signal-to-Noise Ratio:** Is the document concise and information-dense, or is it filled with filler?
 
 Goal: compare **quality of codebase understanding**
 
@@ -206,6 +218,7 @@ This means extra reasoning mainly helps with **interpretation**, not with raw ex
 |------|--------|
 | Codex medium | ~14 min |
 | Codex extra thinking | ~30 min |
+| VSCode | ~5 min |
 
 Extra thinking took more than 2× longer,  
 while improvement was limited to some rubric categories.
