@@ -187,6 +187,18 @@ Codex medium thinking (GPT-5.4) vs Codex extra thinking (GPT-5.4)
 Result: Extra thinking produced deeper architectural analysis,  
 but improvements appeared only in some rubric categories.
 
+Extra thinking spent more effort analyzing failure modes and runtime behavior.
+
+It identified additional risks in caching, checkout flow, and environment-specific startup configuration.
+
+Notably, extra thinking inspected infrastructure setup and found that in non-development startup the app loads Key Vault and configures SQL Server with retry-on-failure, including retry settings defined in the infrastructure layer.  
+It also detected an issue in retry configuration where the retry logic may not be consistently applied across environments.
+
+Extra thinking also showed stronger architectural reasoning.  
+For example, it pointed out a layering anomaly that medium thinking missed:
+
+*Justification:* It maps the standard internal dependencies well but fails to spot the architectural anomaly where the inner domain (`ApplicationCore`) references a UI-adjacent library (`BlazorShared`).
+
 ---
 
 ## Important observation — extra thinking helped only in some areas
