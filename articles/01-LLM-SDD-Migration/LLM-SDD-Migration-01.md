@@ -52,7 +52,6 @@ The codebase is not large in raw size, but the architectural scope is non-trivia
 
 The repository is archived and no longer actively maintained, which makes it a good candidate for experimentation. The intent is not to criticize the original design, but to use a realistic codebase to evaluate different migration approaches.
 
-We will assume a migration to **Java (Spring Boot)** for the backend and **React** for the frontend.  
 This is a hypothetical cross-stack scenario used to simulate real-world situations such as vendor strategy changes, platform standardization, or team skill constraints.
 
 During the series, different LLM-assisted workflows will be explored, including:
@@ -84,7 +83,7 @@ The approach in this series is therefore:
 
 To compare how different models analyze the same codebase, I used a fixed set of prompts and collected the responses produced by each model.
 
-Prompts were refined with ChatGPT to make them clear and neutral, so that differences in results come from the models, not from prompt wording.
+Prompts were refined with ChatGPT to make them clear and optimized for the model.
 
 The table below shows the prompts used in the experiment and the corresponding results.
 
@@ -102,8 +101,6 @@ These responses are evaluated in the next section using an AI-as-Judge approach.
 
 When comparing outputs from different LLM tools, subjective reading is unreliable.  
 To make the comparison reproducible, I used an **AI-as-judge approach with a fixed rubric**, where two generated documents were evaluated against the same criteria.
-
-Each run compared two documents produced by different tools, and the judge selected which one produced **better codebase analysis**.
 
 The judge model used in all runs was **Gemini 3 Pro**.
 
@@ -148,7 +145,7 @@ Codex medium thinking (GPT-5.4) vs Claude Code (Opus 4.6)
 Result: Codex medium produced more precise and grounded codebase analysis.
 
 
-Claude Code produced very good tables and correctly detected the `ApplicationCore → BlazorShared` dependency, calling it a domain-layer contamination hotspot, which is a meaningful architectural finding.
+Claude Code produced very good tables and correctly detected the `ApplicationCore → BlazorShared` dependency, calling it a domain-layer contamination hotspot, which is a meaningful architectural finding. Codex also detected reference `ApplicationCore → BlazorShared`, however it has not identified it as a hotspot.
 
 However, it lost points in structural accuracy due to inferred runtime details.  
 Example:
@@ -210,11 +207,9 @@ Extra thinking spent more effort analyzing failure modes and runtime behavior.
 
 It identified additional risks in caching, checkout flow, and environment-specific startup configuration.
 
-Notably, extra thinking inspected infrastructure setup and found that in non-development startup the app loads Key Vault and configures SQL Server with retry-on-failure, including retry settings defined in the infrastructure layer.  
 It also detected an issue in retry configuration where the retry logic may not be consistently applied across environments.
 
-Extra thinking also showed stronger architectural reasoning.  
-For example, it pointed out a layering anomaly that medium thinking missed:
+It also pointed out a layering anomaly that medium thinking missed:
 
 > *Justification:* It maps the standard internal dependencies well but fails to spot the architectural anomaly where the inner domain (`ApplicationCore`) references a UI-adjacent library (`BlazorShared`).
 
@@ -230,9 +225,6 @@ Possible explanation is that extra reasoning mainly helps with **interpretation*
 | Codex extra thinking | ~30 min |
 | VSCode | ~5 min |
 
-Extra thinking took more than 2× longer than medium thinking, while improvement was limited to some rubric categories.
-
-This is important in real workflows where analysis must be repeated many times.
 
 ---
 
