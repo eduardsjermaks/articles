@@ -41,7 +41,7 @@ I used the same overall idea as before: ask each model to generate a project-ori
 | [make-readme-fable.md](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/make-readme/nopCommerce/01/make-readme-fable.md) | [Fable response](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/make-readme/nopCommerce/01/responses/fable-readme-response.md) |
 | [make-readme-opus.md](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/make-readme/nopCommerce/01/make-readme-opus.md) | [Claude Code response](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/make-readme/nopCommerce/01/responses/opus-readme-response.md) |
 
-These documents were then compared pairwise using the judge prompts under `ai-judge/nopCommerce`.
+These documents were then compared pairwise using the judge prompts under `ai-judge/nopCommerce/v1`.
 
 ---
 
@@ -65,8 +65,8 @@ Goal: compare **quality of codebase understanding** with less attention on style
 
 | Run | Prompt file | Result file | Document A | Document B |
 |-----|-------------|-------------|------------|------------|
-| 1 | [1-ai-judge-fable-vs-codex.md](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/ai-judge/nopCommerce/requests/1-ai-judge-fable-vs-codex.md) | [1-a-judge-fable-vs-codex.md](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/ai-judge/nopCommerce/results/1-a-judge-fable-vs-codex.md) | Fable | Codex (GPT-5.4) |
-| 2 | [1-ai-judge-fable-vs-opus.md](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/ai-judge/nopCommerce/requests/1-ai-judge-fable-vs-opus.md) | [1-ai-judge-fable-vs-opus.md](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/ai-judge/nopCommerce/results/1-ai-judge-fable-vs-opus.md) | Fable | Claude Code (Opus 4.8) |
+| 1 | [fable-vs-codex-request.md](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/ai-judge/nopCommerce/v1/requests/fable-vs-codex-request.md) | [fable-vs-codex-result.md](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/ai-judge/nopCommerce/v1/results/fable-vs-codex-result.md) | Fable | Codex (GPT-5.4) |
+| 2 | [fable-vs-opus-request.md](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/ai-judge/nopCommerce/v1/requests/fable-vs-opus-request.md) | [fable-vs-opus-result.md](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/ai-judge/nopCommerce/v1/results/fable-vs-opus-result.md) | Fable | Claude Code (Opus 4.8) |
 
 ---
 
@@ -110,24 +110,26 @@ Fable vs Claude Code (Opus 4.8)
 | Criterion | Fable | Claude Code (Opus 4.8) |
 |-----------|-------|-------------|
 | Evidence grounding | 5 | 5 |
-| Structural accuracy | 5 | 5 |
-| Dependency mapping | 4 | 5 |
+| Structural accuracy | 5 | 3 |
+| Dependency mapping | 5 | 4 |
 | Critical flow | 5 | 3 |
-| Migration insight | 5 | 5 |
-| Epistemic discipline | 5 | 5 |
-| Signal / noise | 5 | 5 |
+| Migration insight | 5 | 3 |
+| Epistemic discipline | 5 | 4 |
+| Signal / noise | 5 | 4 |
 
 Result: **Fable again produced the safer migration document.**
 
-This comparison was closer.
+This comparison was not especially close.
 
-Claude Code (Opus 4.8) performed strongly on broad dependency mapping and surfaced useful environment and package-level details. The judge specifically noted that it provided a wider infrastructural view, including exact dependency versions and configuration-level concerns.
+The biggest issues were structural and behavioral.
 
-Fable scored better in the category that matters most for migration safety: **critical flow identification**.
+- It treated the order-placement lock like a distributed lock even though the stronger document identified it as an OS mutex with sync-over-async behavior.
+- It missed the self-HTTP boundary in scheduled task execution and described the task runner more like a normal in-process thread scheduler.
+- It became less reliable around configuration artifacts and legacy settings files.
 
-The judge’s reasoning was that Claude Code widened effectively and gave a good infrastructure overview. Fable, by contrast, followed the order-processing path far enough to expose concrete operational risks.
+These mistakes matter because they hide the exact kinds of operational constraints that make migrations fail late.
 
-For migration planning, that kind of detail is often more useful than a package inventory. Library versions help, but checkout behavior, process-local mutexes, and self-HTTP background tasks usually have more impact on migration risk.
+The stronger Fable document stayed grounded in the dangerous details: mutex-based duplicate-order protection, sync-over-async behavior, and the scheduler's dependency on HTTP calls back into the same application.
 
 ---
 
@@ -162,7 +164,7 @@ Findings:
 - **Fable was the strongest model in this nopCommerce round**
 - Its advantage came mostly from better architectural synthesis and interpretation
 - **Codex (GPT-5.4)** remained grounded, but the document was noisier and weaker at converting evidence into migration guidance
-- **Claude Code (Opus 4.8)** was strong on dependency and infrastructure scanning, but weaker on the deepest execution-path analysis
+- **Claude Code (Opus 4.8)** missed several migration-relevant implementation details, especially around locking and scheduled task execution
 - Model rankings can change when the project changes; results from a moderate codebase do not automatically transfer to a more complex monolith
 
 The broader takeaway is that project-orientation tasks should be judged by how useful they are for understanding real system behavior. Module lists and file citations still matter, but they are not enough on their own.
