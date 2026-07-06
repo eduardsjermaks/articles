@@ -2,7 +2,7 @@
 
 The first comparison used **eShopOnWeb**, which was useful for testing the workflow, but it is still a relatively moderate codebase.
 
-That makes it good for a first pass, but not ideal for stressing the parts that usually break during real migrations: hidden coupling, mixed concerns, runtime assumptions, and behavior spread across many layers.
+That makes it good for a first pass, but not ideal for stressing the parts that break during real migrations: hidden coupling, mixed concerns, runtime assumptions, and behavior spread across many layers.
 
 For the next step, I switched to **nopCommerce**.
 
@@ -23,7 +23,7 @@ It is a larger, older, more feature-dense ASP.NET application with:
 - in-process scheduled tasks
 - many integrations and configuration surfaces
 
-This matters because migration work is rarely blocked by syntax. It is blocked by behavior hidden in operational details: startup flow, scheduling, plugin loading, order processing, configuration writes, and cross-cutting infrastructure.
+This matters because migration work usually gets blocked in operational details such as startup flow, scheduling, plugin loading, order processing, configuration writes, and cross-cutting infrastructure.
 
 In a codebase like this, a model has to do more than summarize folders. It has to follow execution paths and separate observed facts from plausible guesses.
 
@@ -57,7 +57,7 @@ I kept the same rubric as in the earlier comparison:
 6. **Epistemic Discipline**
 7. **Signal-to-Noise Ratio**
 
-Goal: compare **quality of codebase understanding** rather than style or verbosity.
+Goal: compare **quality of codebase understanding** with less attention on style or verbosity.
 
 ---
 
@@ -85,12 +85,12 @@ Fable vs Codex
 
 Result: **Fable produced the safer document for migration.**
 
-The interesting part is that this was not a simple grounding failure from Codex. According to the judge, Codex was still well-evidenced, but it behaved more like an extractor than an architectural synthesizer.
+The main point here is that Codex did not fail because of weak grounding. According to the judge, it was still well-evidenced, but it stayed closer to extraction than architectural synthesis.
 
 The judge explicitly described the difference like this:
 
 - Fable acted as an architectural synthesizer
-- Codex acted more like a search-result aggregator or static extractor
+- Codex stayed closer to a search-result aggregator or static extractor
 
 In practice, that meant Fable was better at turning code facts into migration-relevant constraints.
 
@@ -123,13 +123,11 @@ This comparison was closer.
 
 Claude Code (Opus 4.8) performed strongly on broad dependency mapping and surfaced useful environment and package-level details. The judge specifically noted that it provided a wider infrastructural view, including exact dependency versions and configuration-level concerns.
 
-However, Fable won on the most important category for migration safety: **critical flow identification**.
+Fable scored better in the category that matters most for migration safety: **critical flow identification**.
 
-The judge’s reasoning was that Claude Code widened effectively, but backed away when the most complex algorithmic flow needed deeper tracing. Fable, by contrast, followed the order-processing path far enough to expose concrete operational risks.
+The judge’s reasoning was that Claude Code widened effectively and gave a good infrastructure overview. Fable followed the order-processing path further and exposed concrete operational risks.
 
-That difference matters more than package inventory.
-
-For migration planning, knowing that a system uses a certain library version is useful. Knowing that checkout relies on a process-local mutex pattern or that background tasks are triggered through self-HTTP is usually more important.
+For migration planning, that kind of detail is often more useful than a package inventory. Library versions help, but checkout behavior, process-local mutexes, and self-HTTP background tasks usually have more impact on migration risk.
 
 ---
 
@@ -144,7 +142,7 @@ That suggests an important pattern:
 - smaller or cleaner projects reward extraction and concise summarization
 - larger monoliths reward deeper synthesis of runtime behavior and architectural side effects
 
-In other words, once the codebase becomes messy enough, the winning model is not the one that lists the most files. It is the one that can infer the safest migration constraints from the observed code.
+Once the codebase becomes messy enough, the winning model is usually the one that can infer safe migration constraints from the observed code.
 
 ---
 
@@ -162,12 +160,12 @@ In other words, once the codebase becomes messy enough, the winning model is not
 Findings:
 
 - **Fable was the strongest model in this nopCommerce round**
-- Its advantage came mostly from better architectural synthesis, not from better raw extraction
+- Its advantage came mostly from better architectural synthesis and interpretation
 - **Codex** remained grounded, but the document was noisier and weaker at converting evidence into migration guidance
 - **Claude Code (Opus 4.8)** was strong on dependency and infrastructure scanning, but weaker on the deepest execution-path analysis
 - Model rankings can change when the project changes; results from a moderate codebase do not automatically transfer to a more complex monolith
 
-The broader takeaway is that project-orientation tasks should not be judged only by whether a model can enumerate modules or cite files.
+The broader takeaway is that project-orientation tasks should be judged by how useful they are for understanding real system behavior. Module lists and file citations still matter, but they are not enough on their own.
 
 For migration work, the higher-value signal is whether the model can identify the behaviors that would actually break when the system is moved: process assumptions, state transitions, scheduling tricks, and control-flow hotspots.
 
