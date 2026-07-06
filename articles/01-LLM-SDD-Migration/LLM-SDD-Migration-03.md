@@ -66,7 +66,7 @@ Goal: compare **quality of codebase understanding** rather than style or verbosi
 | Run | Prompt file | Result file | Document A | Document B |
 |-----|-------------|-------------|------------|------------|
 | 1 | [1-ai-judge-fable-vs-codex.md](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/ai-judge/nopCommerce/requests/1-ai-judge-fable-vs-codex.md) | [1-a-judge-fable-vs-codex.md](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/ai-judge/nopCommerce/results/1-a-judge-fable-vs-codex.md) | Fable | Codex |
-| 2 | [1-ai-judge-fable-vs-opus.md](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/ai-judge/nopCommerce/requests/1-ai-judge-fable-vs-opus.md) | [1-ai-judge-fable-vs-opus.md](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/ai-judge/nopCommerce/results/1-ai-judge-fable-vs-opus.md) | Fable | Claude Code |
+| 2 | [1-ai-judge-fable-vs-opus.md](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/ai-judge/nopCommerce/requests/1-ai-judge-fable-vs-opus.md) | [1-ai-judge-fable-vs-opus.md](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/ai-judge/nopCommerce/results/1-ai-judge-fable-vs-opus.md) | Fable | Claude Code (Opus 4.8) |
 
 ---
 
@@ -105,9 +105,9 @@ Codex still found many correct details, but the result was noisier and less deci
 ---
 
 ## Run 2  
-Fable vs Claude Code
+Fable vs Claude Code (Opus 4.8)
 
-| Criterion | Fable | Claude Code |
+| Criterion | Fable | Claude Code (Opus 4.8) |
 |-----------|-------|-------------|
 | Evidence grounding | 5 | 5 |
 | Structural accuracy | 5 | 5 |
@@ -121,7 +121,7 @@ Result: **Fable again produced the safer migration document.**
 
 This comparison was closer.
 
-Claude Code performed strongly on broad dependency mapping and surfaced useful environment and package-level details. The judge specifically noted that it provided a wider infrastructural view, including exact dependency versions and configuration-level concerns.
+Claude Code (Opus 4.8) performed strongly on broad dependency mapping and surfaced useful environment and package-level details. The judge specifically noted that it provided a wider infrastructural view, including exact dependency versions and configuration-level concerns.
 
 However, Fable won on the most important category for migration safety: **critical flow identification**.
 
@@ -153,7 +153,7 @@ In other words, once the codebase becomes messy enough, the winning model is not
 | Run | A | B | Winner |
 |-----|---|---|--------|
 | 1 | Fable | Codex | Fable |
-| 2 | Fable | Claude Code | Fable |
+| 2 | Fable | Claude Code (Opus 4.8) | Fable |
 
 ---
 
@@ -164,7 +164,7 @@ Findings:
 - **Fable was the strongest model in this nopCommerce round**
 - Its advantage came mostly from better architectural synthesis, not from better raw extraction
 - **Codex** remained grounded, but the document was noisier and weaker at converting evidence into migration guidance
-- **Claude Code** was strong on dependency and infrastructure scanning, but weaker on the deepest execution-path analysis
+- **Claude Code (Opus 4.8)** was strong on dependency and infrastructure scanning, but weaker on the deepest execution-path analysis
 - Model rankings can change when the project changes; results from a moderate codebase do not automatically transfer to a more complex monolith
 
 The broader takeaway is that project-orientation tasks should not be judged only by whether a model can enumerate modules or cite files.
