@@ -1,0 +1,3 @@
+opus 4.8
+claude code
+Version:          2.1.201
