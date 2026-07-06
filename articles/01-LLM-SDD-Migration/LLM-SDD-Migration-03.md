@@ -37,7 +37,7 @@ I used the same overall idea as before: ask each model to generate a project-ori
 
 | Prompt | Result |
 |--------|--------|
-| [codex-readme-prompt.md](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/make-readme/nopCommerce/01/codex-readme-prompt.md) | [Codex response](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/make-readme/nopCommerce/01/responses/codex-readme-prompt-response.md) |
+| [codex-readme-prompt.md](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/make-readme/nopCommerce/01/codex-readme-prompt.md) | [Codex (GPT-5.4) response](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/make-readme/nopCommerce/01/responses/codex-readme-prompt-response.md) |
 | [make-readme-fable.md](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/make-readme/nopCommerce/01/make-readme-fable.md) | [Fable response](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/make-readme/nopCommerce/01/responses/fable-readme-response.md) |
 | [make-readme-opus.md](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/make-readme/nopCommerce/01/make-readme-opus.md) | [Claude Code response](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/make-readme/nopCommerce/01/responses/opus-readme-response.md) |
 
@@ -65,15 +65,15 @@ Goal: compare **quality of codebase understanding** with less attention on style
 
 | Run | Prompt file | Result file | Document A | Document B |
 |-----|-------------|-------------|------------|------------|
-| 1 | [1-ai-judge-fable-vs-codex.md](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/ai-judge/nopCommerce/requests/1-ai-judge-fable-vs-codex.md) | [1-a-judge-fable-vs-codex.md](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/ai-judge/nopCommerce/results/1-a-judge-fable-vs-codex.md) | Fable | Codex |
+| 1 | [1-ai-judge-fable-vs-codex.md](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/ai-judge/nopCommerce/requests/1-ai-judge-fable-vs-codex.md) | [1-a-judge-fable-vs-codex.md](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/ai-judge/nopCommerce/results/1-a-judge-fable-vs-codex.md) | Fable | Codex (GPT-5.4) |
 | 2 | [1-ai-judge-fable-vs-opus.md](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/ai-judge/nopCommerce/requests/1-ai-judge-fable-vs-opus.md) | [1-ai-judge-fable-vs-opus.md](https://github.com/eduardsjermaks/articles/blob/main/articles/01-LLM-SDD-Migration/prompts/ai-judge/nopCommerce/results/1-ai-judge-fable-vs-opus.md) | Fable | Claude Code (Opus 4.8) |
 
 ---
 
 ## Run 1  
-Fable vs Codex
+Fable vs Codex (GPT-5.4)
 
-| Criterion | Fable | Codex |
+| Criterion | Fable | Codex (GPT-5.4) |
 |-----------|-------|-------|
 | Evidence grounding | 5 | 5 |
 | Structural accuracy | 5 | 4 |
@@ -85,12 +85,12 @@ Fable vs Codex
 
 Result: **Fable produced the safer document for migration.**
 
-The main point here is that Codex did not fail because of weak grounding. According to the judge, it was still well-evidenced, but it stayed closer to extraction than architectural synthesis.
+The main point here is that Codex (GPT-5.4) did not fail because of weak grounding. According to the judge, it was still well-evidenced, but it stayed closer to extraction than architectural synthesis.
 
 The judge explicitly described the difference like this:
 
 - Fable acted as an architectural synthesizer
-- Codex stayed closer to a search-result aggregator or static extractor
+- Codex (GPT-5.4) stayed closer to a search-result aggregator or static extractor
 
 In practice, that meant Fable was better at turning code facts into migration-relevant constraints.
 
@@ -100,7 +100,7 @@ The most important examples were:
 - identifying the scheduler’s self-HTTP loopback behavior as an architectural constraint
 - distinguishing facts, inferences, and unknowns in a disciplined way
 
-Codex still found many correct details, but the result was noisier and less decisive when moving from structure to interpretation.
+Codex (GPT-5.4) still found many correct details, but the result was noisier and less decisive when moving from structure to interpretation.
 
 ---
 
@@ -125,7 +125,7 @@ Claude Code (Opus 4.8) performed strongly on broad dependency mapping and surfac
 
 Fable scored better in the category that matters most for migration safety: **critical flow identification**.
 
-The judge’s reasoning was that Claude Code widened effectively and gave a good infrastructure overview. Fable followed the order-processing path further and exposed concrete operational risks.
+The judge’s reasoning was that Claude Code widened effectively and gave a good infrastructure overview. Fable, by contrast, followed the order-processing path far enough to expose concrete operational risks.
 
 For migration planning, that kind of detail is often more useful than a package inventory. Library versions help, but checkout behavior, process-local mutexes, and self-HTTP background tasks usually have more impact on migration risk.
 
@@ -150,7 +150,7 @@ Once the codebase becomes messy enough, the winning model is usually the one tha
 
 | Run | A | B | Winner |
 |-----|---|---|--------|
-| 1 | Fable | Codex | Fable |
+| 1 | Fable | Codex (GPT-5.4) | Fable |
 | 2 | Fable | Claude Code (Opus 4.8) | Fable |
 
 ---
@@ -161,7 +161,7 @@ Findings:
 
 - **Fable was the strongest model in this nopCommerce round**
 - Its advantage came mostly from better architectural synthesis and interpretation
-- **Codex** remained grounded, but the document was noisier and weaker at converting evidence into migration guidance
+- **Codex (GPT-5.4)** remained grounded, but the document was noisier and weaker at converting evidence into migration guidance
 - **Claude Code (Opus 4.8)** was strong on dependency and infrastructure scanning, but weaker on the deepest execution-path analysis
 - Model rankings can change when the project changes; results from a moderate codebase do not automatically transfer to a more complex monolith
 
