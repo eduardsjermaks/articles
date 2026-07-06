@@ -85,12 +85,12 @@ Fable vs Codex (GPT-5.4)
 
 Result: **Fable produced the safer document for migration.**
 
-The main point here is that Codex (GPT-5.4) did not fail because of weak grounding. According to the judge, it was still well-evidenced, but it stayed closer to extraction than architectural synthesis.
+Codex (GPT-5.4) was still well grounded. According to the judge, the document stayed closer to extraction than architectural synthesis.
 
 The judge explicitly described the difference like this:
 
 - Fable acted as an architectural synthesizer
-- Codex (GPT-5.4) stayed closer to a search-result aggregator or static extractor
+- Codex (GPT-5.4) read more like a search-result aggregator or static extractor
 
 In practice, that meant Fable was better at turning code facts into migration-relevant constraints.
 
@@ -119,15 +119,13 @@ Fable vs Claude Code (Opus 4.8)
 
 Result: **Fable again produced the safer migration document.**
 
-This comparison was not especially close.
-
 The biggest issues were structural and behavioral.
 
 - It treated the order-placement lock like a distributed lock even though the stronger document identified it as an OS mutex with sync-over-async behavior.
 - It missed the self-HTTP boundary in scheduled task execution and described the task runner more like a normal in-process thread scheduler.
 - It became less reliable around configuration artifacts and legacy settings files.
 
-These mistakes matter because they hide the exact kinds of operational constraints that make migrations fail late.
+These mistakes matter because they hide operational constraints that usually show up late in migration work.
 
 The stronger Fable document stayed grounded in the dangerous details: mutex-based duplicate-order protection, sync-over-async behavior, and the scheduler's dependency on HTTP calls back into the same application.
 
@@ -139,7 +137,7 @@ With eShopOnWeb, the main differences were often about how grounded and careful 
 
 With nopCommerce, that baseline became less important because all three outputs were already reasonably grounded. The separation happened later, when the models had to interpret behavior in a much more complex system.
 
-That suggests an important pattern:
+There is a clear pattern here:
 
 - smaller or cleaner projects reward extraction and concise summarization
 - larger monoliths reward deeper synthesis of runtime behavior and architectural side effects
@@ -167,7 +165,7 @@ Findings:
 - **Claude Code (Opus 4.8)** missed several migration-relevant implementation details, especially around locking and scheduled task execution
 - Model rankings can change when the project changes; results from a moderate codebase do not automatically transfer to a more complex monolith
 
-The broader takeaway is that project-orientation tasks should be judged by how useful they are for understanding real system behavior. Module lists and file citations still matter, but they are not enough on their own.
+The broader takeaway is that project-orientation tasks should be judged by how useful they are for understanding real system behavior. Module lists and file citations still matter. They just do not cover enough by themselves.
 
 For migration work, the higher-value signal is whether the model can identify the behaviors that would actually break when the system is moved: process assumptions, state transitions, scheduling tricks, and control-flow hotspots.
 
