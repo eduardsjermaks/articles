@@ -57,7 +57,7 @@ I kept the same rubric as in the earlier comparison:
 6. **Epistemic Discipline**
 7. **Signal-to-Noise Ratio**
 
-Goal: compare **quality of codebase understanding** with less attention on style or verbosity.
+Goal: compare quality of codebase understanding with less attention on style or verbosity.
 
 ---
 
@@ -137,21 +137,11 @@ With eShopOnWeb, the main differences were often about how grounded and careful 
 
 With nopCommerce, that baseline became less important because all three outputs were already reasonably grounded. The separation happened later, when the models had to interpret behavior in a much more complex system.
 
-There is a clear pattern here:
+The move from eShopOnWeb to nopCommerce made the comparison more practical.
 
-- smaller or cleaner projects reward extraction and concise summarization
-- larger monoliths reward deeper synthesis of runtime behavior and architectural side effects
+At that point, it was less about which model could summarize the repository and more about which one could identify the parts most likely to break during migration.
 
-Once the codebase becomes messy enough, the winning model is usually the one that can infer safe migration constraints from the observed code.
-
----
-
-## Aggregated summary
-
-| Run | A | B | Winner |
-|-----|---|---|--------|
-| 1 | Fable | Codex (GPT-5.4) | Fable |
-| 2 | Fable | Claude Code (Opus 4.8) | Fable |
+In this round, Fable did that more reliably.
 
 ---
 
@@ -159,7 +149,7 @@ Once the codebase becomes messy enough, the winning model is usually the one tha
 
 Findings:
 
-- **Fable was the strongest model in this nopCommerce round**
+- **Fable** was the strongest model in this nopCommerce round
 - Its advantage came mostly from better architectural synthesis and interpretation
 - **Codex (GPT-5.4)** remained grounded, but the document was noisier and weaker at converting evidence into migration guidance
 - **Claude Code (Opus 4.8)** missed several migration-relevant implementation details, especially around locking and scheduled task execution
