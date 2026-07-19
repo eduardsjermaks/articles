@@ -1,5 +1,5 @@
 ---
-title: I Asked an LLM to Fix My Terminal Commands. It Built a Tool.
+title: Building a Small Terminal Command Helper with an LLM
 published: false
 description: A practical experiment in using an LLM agent to turn one terminal frustration into a working, cross-platform CLI.
 tags: ai, cli, devtools, go
