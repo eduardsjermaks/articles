@@ -10,7 +10,7 @@ The result is nudge: https://github.com/eduardsjermaks/nudge
 
 One development session reported about 382k output tokens, 419k cache writes, and 35.7M cache reads. My rough API-price estimate for that session is about $61.
 
-For me, the tool was already useful at that point. I decided to spend a few more hours testing it across operating systems and making setup more user-friendly, in case others find it useful too.
+The tool was already useful for me at that point. I spent a few more hours testing it across operating systems and making setup more user-friendly so others could try it too
 
 But it is a good example of where LLM agents change the economics of small developer tools.
 
