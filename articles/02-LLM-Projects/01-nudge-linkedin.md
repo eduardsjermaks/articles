@@ -1,7 +1,4 @@
-
-I continued experimenting during Fable's promotion period.
-
-I used it to build a tool for a very small frustration: terminal command mistakes.
+During Fable's promotion period, I continued experimenting and used it to build a tool for a small but recurring frustration: terminal command mistakes
 
 I switch between Windows and Unix-like shells often enough to type the right command in the wrong environment, misspell a Git subcommand, or use a real CLI with the wrong arguments. The correction is usually simple, but the context switching adds up.
 
