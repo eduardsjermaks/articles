@@ -8,7 +8,7 @@ The first usable Go prototype took roughly an hour with minimal steering.
 
 The result is nudge: https://github.com/eduardsjermaks/nudge
 
-One development session reported about 382k output tokens, 419k cache writes, and 35.7M cache reads. My rough API-price estimate for that session is about $61.
+One development session reported about 382k output tokens, 419k cache writes, and 35.7M cache reads. My rough API-price estimate for that session is about $63.
 
 The tool was already useful for me at that point. I spent a few more hours testing it across operating systems and making setup more user-friendly so others could try it too
 
@@ -16,6 +16,6 @@ But it is a good example of where LLM agents change the economics of small devel
 
 The experiment is now an open-source tool rather than a demo. I am curious which small, repetitive friction point you would turn into a tool if the first working version took an afternoon instead of a weekend.
 
-Full article: https://dev.to/eduardj_67dc3f850/i-asked-an-llm-to-fix-my-terminal-commands-it-built-a-tool-2hj
+Full article: https://dev.to/eduardj_67dc3f850/building-a-small-terminal-command-helper-with-an-llm-2bdm
 
 #AI #DeveloperTools #CLI #Golang #SoftwareEngineering
