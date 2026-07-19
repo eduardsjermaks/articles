@@ -19,4 +19,6 @@ But it is a good example of where LLM agents change the economics of small devel
 
 The experiment is now an open-source tool rather than a demo. I am curious which small, repetitive friction point you would turn into a tool if the first working version took an afternoon instead of a weekend.
 
+Full article: https://dev.to/eduardj_67dc3f850/i-asked-an-llm-to-fix-my-terminal-commands-it-built-a-tool-2hj
+
 #AI #DeveloperTools #CLI #Golang #SoftwareEngineering
