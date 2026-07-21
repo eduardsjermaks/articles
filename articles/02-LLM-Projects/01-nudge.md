@@ -9,7 +9,7 @@ I regularly lose time to terminal muscle memory.
 
 I work across Windows and Unix-like shells, so I will remember the right command in the wrong environment, transpose a Git subcommand, or use a valid binary with an invalid subcommand. The fix is usually easy to find. The interruption is the costly part: stop, search, translate the answer back into the current shell, and try again.
 
-The idea is not new. There are projects that help with failed commands, as well as terminal-integrated LLMs such as aichat. However, I wanted something that does one thing well: fix commands in a seamless workflow powered by an LLM.
+The idea is not new. [thefuck](https://github.com/nvbn/thefuck) offers a very similar workflow for correcting failed commands. I wanted to keep that focused loop, make a few changes, and add an LLM so it could handle cases that need more than a rule-based correction. Terminal-integrated LLMs such as aichat also cover related ground, but I wanted a tool that does one thing well: fix commands in a seamless workflow powered by an LLM.
 
 I wanted a deliberately narrow tool: when a command fails, suggest the command I probably meant, let me inspect it, and run it only after confirmation.
 
