@@ -1,0 +1,6 @@
+Many software people are re-posting Uncle Bob twit below. 
+The idea not to read code that is generated also align with the broad latest opinion that after code generation is solved then verification becomes the next botleneck in the software process. 
+
+- Idea about how we sync our expectations with coding agents. When we develop a product do we already know upfront all edge cases which can occur. Even we have not thought about the situation in which product can appear, can we be sure that agent will find a good way to solve this, that is algined without our and business vision of the world. 
+
+Are there enough now metrics based on which we can say that product can go-live? Branch/code coverage give only partial view that code was exercised.  Mutation tests that tests are robust to edge cases. Quality of asserts is more valuable, human still involved, here we try to synchronize our view of the world with agent. Additionally how to make sure that code does not leak data somewhere? What metrics should be there, there is a service that occasionaly sends data somewhere. We should have additional views, metrics on generated code what it does or should not do, like negative tests. Looks this field will evolve
