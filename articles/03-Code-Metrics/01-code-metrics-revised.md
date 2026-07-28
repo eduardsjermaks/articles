@@ -1,6 +1,6 @@
 # Is Code Generation Solved, or Has Verification Become the Bottleneck?
 
-As discussion around code generation accelerates, I keep returning to a harder question: what evidence would let us trust generated code?
+As discussion around code generation accelerates, I keep returning to a harder question: what evidence would let us trust generated code without code review?
 
 Generating code itself is becoming faster and cheaper. Now more and more talks that verification is a bottleneck. But can it be that we can base decisions on a small set of universal indicators whether the system is good enough for production use? 
 
