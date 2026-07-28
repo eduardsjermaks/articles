@@ -1,12 +1,17 @@
 # Is Code Generation Solved, or Has Verification Become the Bottleneck?
 
-As discussion around code generation accelerates, I keep returning to a harder question: what evidence would let us trust generated code without reviewing every line manually?
+As discussion around code generation accelerates, I keep returning to a harder question: what evidence would let us trust generated code?
 
-Generating code is becoming faster and cheaper. That can shift the engineering constraint from implementation to verification. But the answer is unlikely to be a small set of universal indicators. Different systems carry different risks, and functional correctness, security, privacy, resilience, maintainability, and regulatory compliance are different claims that require different evidence.
+Generating code itself is becoming faster and cheaper. Now more and more talks that verification is a bottleneck. But can it be that we can base decisions on a small set of universal indicators whether the system is good enough for production use? 
+
+Different systems carry different risks, and functional correctness, security, privacy, resilience, maintainability, and regulatory compliance are different claims that require different evidence.
 
 The more useful question is whether we can assemble enough evidence for a particular change and its risk: enough to reduce the right kind of human review, and enough to justify deployment.
 
 ## Test Coverage Is Necessary, but Not Sufficient
+
+
+Dijkstra's old point applies: testing shows the presence of bugs, not their absence. You cannot enumerate your way through bad behaviors.
 
 - **Line and branch coverage** show that code was executed. They do not show that tests assert the right behavior, represent business expectations, or cover the important combinations of conditions.
 - **Mutation testing** can reveal tests that do not distinguish selected, seeded defects. It is a useful signal of test-suite sensitivity, but it cannot establish that all business rules or real-world edge cases have been considered.
