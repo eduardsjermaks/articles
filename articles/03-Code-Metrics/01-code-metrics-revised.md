@@ -17,9 +17,13 @@ Dijkstra's old point applies: testing shows the presence of bugs, not their abse
 - **Mutation testing** can reveal tests that do not distinguish selected, seeded defects. It is a useful signal of test-suite sensitivity, but it cannot establish that all business rules or real-world edge cases have been considered.
 - **Negative testing** matters too. We need to verify that a system does *not* perform unintended actions, such as sending credentials or other sensitive data over the network.
 
-We need evidence that reaches beyond execution. Requirements, acceptance criteria, security controls, and hazards should be traceable to tests or to another justified verification method. Properties and invariants can complement example-based tests, especially when the system must preserve rules such as authorization boundaries, conservation of money, or valid state transitions.
+We need evidence that reaches beyond execution. Requirements, acceptance criteria, security controls, and hazards should be traceable to tests or to another justified verification method. Property-based testing and fuzzing deserve a place here too: properties and invariants encode intent more durably than example-based tests, and may be the closest thing we have to machine-checkable intent. In a Java stack, tools such as jqwik and Jazzer can exercise those properties more broadly. Types, contracts, and static analysis provide another widely deployed form of verification. Boundary contracts, including OpenAPI schemas, consumer-driven contracts, and Kafka schema-compatibility gates, localize trust between components.
+
+Who produces the evidence matters. If the same agent writes the implementation and every test, a green suite may only confirm the agent's interpretation of an ambiguous requirement. Human-owned acceptance tests, independently authored checks, and held-out evaluators provide a more stable reference point. This is why verification independence is central to safety-critical practice.
 
 Metrics are signals, not proof. High coverage, a strong mutation score, or a clean static-analysis report can increase confidence, but none proves correctness, safety, or completeness on its own. The evidence must be interpreted against explicit assumptions and acceptable residual risk.
+
+Metrics also become fragile when an agent is optimized directly against them: assertions can be weakened, inputs special-cased, and inconvenient checks removed. Gates need ownership, adversarial robustness, and some evidence held outside the generating loop.
 
 ## Evidence Beyond Tests
 
@@ -38,7 +42,7 @@ Another question is how to measure a system's ability to evolve safely. When req
 
 Small changes are not always better: a legitimate requirement may affect multiple components. The architectural concern is controlled change with preserved behavior. Useful indicators may include the contracts and dependencies touched, compatibility-test results, the scope of security-sensitive changes, regression rates, and the evidence that continues to support unaffected behavior.
 
-Regeneration may be inexpensive, but it still carries risk: regressions, missing tests, altered operational behavior, and quiet drift from the original intent. The engineering mechanics do not disappear because generation is cheap. Generation still needs to remain under control.
+Regeneration may be inexpensive, but it still carries risk: regressions, missing tests, altered operational behavior, and quiet drift from the original intent. Cheap generation makes broad regeneration tempting precisely because its true cost is deferred and often invisible: re-verification across the regenerated surface. A small, localized diff remains valuable because it localizes the verification bill. Before regeneration, characterization or golden tests can pin current behavior; differential testing against the prior version, recorded-traffic replay, shadow deployment, and metamorphic relations can detect drift when there is no simple oracle. The engineering mechanics do not disappear because generation is cheap. Generation still needs to remain under control.
 
 ## Aligning Agents With Product Intent
 
