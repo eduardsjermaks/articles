@@ -22,8 +22,34 @@ Dijkstra's old point applies: testing shows the presence of bugs, not their abse
   than sampled executions.
 - **Property-based testing and fuzzing** deserve a place here too: properties and invariants encode intent more durably than example-based tests, and may be the closest thing we have to machine-checkable intent. 
 - **Types, contracts, and static analysis** provide another widely deployed form of verification. Boundary contracts, including OpenAPI schemas, consumer-driven contracts, and Kafka schema-compatibility gates, localize trust between components.
+- **Evolvability.** Beyond coupling metrics and architecture gates, cheap
+  generation allows measuring change directly: agents attempt representative
+  backlog items in a sandbox; success rate, diff size, and broken tests are
+  recorded. Change cost becomes observed, not estimated.
+- **Many other** functional and non-functional verifications like stress tests, SLAs etc.
+
 
 We need evidence that reaches beyond execution. Requirements, acceptance criteria, security controls, and hazards should be traceable to tests or to another justified verification method. 
+
+It does not see that review disappears, it shifts. Will it take less time, or no?  For some products maybe we can do judgement from few indicators, some other require more thorough review. Most of the indicators and methods already existed, maybe more would come. Potential part of life cycle to automate or to bring receipies, how to use them. I think previosuly there was more trust in engineers who were developing code, less reliance on these indicators itselves, because of some personal motifs like career or risk of loosing reputation.   
+
+---
+
+Review does not disappear; it shifts. The question is whether it takes less time, or merely changes form. For some products, a small set of well-understood indicators may support deployment decisions. Others require deeper, domain-specific review. Many of the relevant indicators and methods already exist, though new ones will emerge. Parts of the lifecycle can be automated or supported with repeatable verification practices.
+
+---
+
+Trust was never carried by indicators alone — it rested on the author.
+Engineers built a track record, and they had something at stake: reputation
+rode on every change. That incentive did quiet verification work no metric
+captured, and it made engineers conservative — risky changes were approached
+carefully, or not at all. An agent has neither a record nor a stake, and a
+model update silently changes who "the author" is. Agents are fearless: they
+attempt the refactor no human would touch and ship nonsense with the same
+confidence. The weight incentives used to carry now falls on indicators — and
+accountability stays with whoever approves.
+---
+
 
 Who produces the evidence matters. If the same agent writes the implementation and every test, a green suite may only confirm the agent's interpretation of an ambiguous requirement. Human-owned acceptance tests, independently authored checks, and held-out evaluators provide a more stable reference point. This is why verification independence is central to safety-critical practice.
 
