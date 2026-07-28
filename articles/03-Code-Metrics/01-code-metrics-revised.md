@@ -15,9 +15,15 @@ Dijkstra's old point applies: testing shows the presence of bugs, not their abse
 
 - **Line and branch coverage** show that code was executed. They do not show that tests assert the right behavior, represent business expectations, or cover the important combinations of conditions.
 - **Mutation testing** can reveal tests that do not distinguish selected, seeded defects. It is a useful signal of test-suite sensitivity, but it cannot establish that all business rules or real-world edge cases have been considered.
-- **Negative testing** matters too. We need to verify that a system does *not* perform unintended actions, such as sending credentials or other sensitive data over the network.
+- **Absence of behavior** is where testing reaches its limit. Tests show what a
+  system does, not what it *never* does — that credentials are never sent over
+  the network, for instance. Such claims are enforced structurally: least
+  privilege, restricted egress, sandboxing, and analysis over all paths rather
+  than sampled executions.
+- **Property-based testing and fuzzing** deserve a place here too: properties and invariants encode intent more durably than example-based tests, and may be the closest thing we have to machine-checkable intent. 
+- **Types, contracts, and static analysis** provide another widely deployed form of verification. Boundary contracts, including OpenAPI schemas, consumer-driven contracts, and Kafka schema-compatibility gates, localize trust between components.
 
-We need evidence that reaches beyond execution. Requirements, acceptance criteria, security controls, and hazards should be traceable to tests or to another justified verification method. Property-based testing and fuzzing deserve a place here too: properties and invariants encode intent more durably than example-based tests, and may be the closest thing we have to machine-checkable intent. In a Java stack, tools such as jqwik and Jazzer can exercise those properties more broadly. Types, contracts, and static analysis provide another widely deployed form of verification. Boundary contracts, including OpenAPI schemas, consumer-driven contracts, and Kafka schema-compatibility gates, localize trust between components.
+We need evidence that reaches beyond execution. Requirements, acceptance criteria, security controls, and hazards should be traceable to tests or to another justified verification method. 
 
 Who produces the evidence matters. If the same agent writes the implementation and every test, a green suite may only confirm the agent's interpretation of an ambiguous requirement. Human-owned acceptance tests, independently authored checks, and held-out evaluators provide a more stable reference point. This is why verification independence is central to safety-critical practice.
 
