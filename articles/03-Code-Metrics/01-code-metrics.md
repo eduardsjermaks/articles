@@ -1,17 +1,32 @@
-While twitt from Uncle Bob is booming, I am wondering are there all metrics, indicators in place, so we are ok to stop reviewing generated code.  
-As code generation considered to be solved a problem, we can now generate code fast and cheap. More and more the opinion starts to prevail, that next bottleneck in system engineer is verification. I believe there is still a room for improvements. Can we deliver to fearlessly critical systems to production purely looking at few indicitors? What these indicators should be?  
+# Is Code Generation Solved, or Has Verification Become the Bottleneck?
 
-- Branch/code coverage give only partial view that code was exercised. It does not give information whethere tests have good asserts that corresponds to business expecttions. 
-- Mutation tests that tests help with to detect missing coverage for the edge cases. should be there something more? 
-- Negative tests. How to understand that we check that system does not do something additional like sending credentials over the wire somhere.
-Do we need more metrics, indicators? 
+As discussion around code generation accelerates, I keep returning to a harder question: do we have the metrics and indicators needed to trust generated code without reviewing it line by line?
 
-- Is there a metric that says how system is flexible for changes? and we should not regenerate everything on requirements change. One can argue that regeneratio is cheap now, but still imposes risk that after regeneration we introduce bug, missing tests. Mechanics still remain the same. Generation should remain under control. 
-- Another bit on tests and assertions. Idea about how we sync our expectations with coding agents. When we develop a product do we already know upfront all edge cases which can occur. Even we have not thought about the situation in which product can appear, can we be sure that agent will find a good way to solve this, that is algined without our and business vision of the world. 
+Generating code is becoming faster and cheaper. That shifts the engineering constraint from implementation to verification. But can we safely deploy systems, especially critical ones, based on a small set of indicators? And what would those indicators need to prove?
 
-For not so sensitive or critical systems piloting and deployment modes with rapid roll back on failure could help, but it is not the case for everything.  
+## Test Coverage Is Necessary, but Not Sufficient
 
-Looking forward if this field evolve more.
+- **Line and branch coverage** show that code was exercised. They do not show that the tests assert the right behavior or reflect real business expectations.
+- **Mutation testing** helps reveal weak tests and missing edge cases. Is it enough, or do we need additional ways to measure the quality of our test suites?
+- **Negative testing** matters too. How do we verify that a system does *not* perform an unintended action, such as sending credentials or other sensitive data over the network?
+
+We need indicators that measure more than execution. They need to give us confidence in correctness, safety, and the completeness of the intended behavior.
+
+## What About Change?
+
+Another question is how to measure a system's ability to evolve. When requirements change, should we be able to make a focused change, or are we forced to regenerate large parts of the solution?
+
+Regeneration may be inexpensive, but it still carries risk: regressions, missing tests, and behavior that quietly drifts from the original intent. The engineering mechanics do not disappear just because generation is cheap. Generation still needs to remain under control.
+
+## Aligning Agents With Product Intent
+
+There is also a deeper issue around tests and assertions: how do we communicate our expectations to coding agents?
+
+When building a product, we rarely know every edge case in advance. If a situation has not been considered by the team, can we assume an agent will discover the right solution? More importantly, can we be confident that its solution aligns with the business's understanding of the problem?
+
+For less sensitive systems, progressive delivery, pilot deployments, observability, and rapid rollback can reduce the risk. But those safeguards are not available everywhere, particularly in critical domains where failure is unacceptable.
+
+I expect this field to evolve quickly. The interesting challenge is no longer only how to generate code, but how to establish enough evidence to trust it.
 
 
 
