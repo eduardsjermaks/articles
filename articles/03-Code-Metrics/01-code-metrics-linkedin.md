@@ -1,31 +1,36 @@
 I keep seeing Uncle Bob’s take on not reviewing code written by AI agents being reposted. It brings me back to a question: how much evidence is enough to trust generated code without code review?
 
-Generating code itself is becoming faster and cheaper. Now more and more talks that verification is a bottleneck. But can it be that we can base decisions on a small set of universal indicators whether the system is good enough for production use? 
+Generating code is becoming faster and cheaper. Verification may become the bottleneck. But can a small set of universal indicators tell us whether a system is ready for production?
 
-What constraints and indicators comes to mind. 
+What constraints and indicators come to mind?
 
- **Line and branch coverage** show that code was executed. They do not show that tests assert the right behavior, represent business expectations, or cover the important combinations of conditions.
-- **Mutation testing** can reveal tests that do not distinguish defects. It is a useful signal of test-suite sensitivity, but it cannot establish that all business rules or real-world edge cases have been considered.
-- **Absence of behavior** is where testing reaches its limit. Tests show what a
-  system does, not what it *never* does — that credentials are never sent over
-  the network, for instance. Such claims are enforced structurally: least
-  privilege, restricted egress, sandboxing, and analysis over all paths rather
-  than sampled executions.
-- **Property-based testing and fuzzing** deserve a place here too: properties and invariants encode intent more durably than example-based tests, and may be the closest thing we have to machine-checkable intent. 
-- **Types, contracts, and static analysis** provide another widely deployed form of verification. Boundary contracts, including OpenAPI schemas, consumer-driven contracts, and Kafka schema-compatibility gates, localize trust between components.
-- **Evolvability.** Beyond coupling metrics and architecture gates, cheap
-  generation allows measuring change directly: agents attempt representative
-  backlog items in a sandbox; success rate, diff size, and broken tests are
-  recorded. Change cost becomes observed, not estimated.
-- **Many other** functional and non-functional verifications like stress tests, SLAs etc
+- **Line and branch coverage** show execution, not whether tests express the right business behavior.
+- **Mutation testing** measures whether a test suite detects injected defects; it does not prove the rules or edge cases are complete.
+- **Negative guarantees** such as "credentials never leave the system" need structural controls: least privilege, restricted egress, sandboxing, and whole-path analysis.
+- **Property-based testing and fuzzing** test invariants beyond a set of examples and may be our closest form of machine-checkable intent.
+- **Types, contracts, and static analysis** make assumptions explicit. OpenAPI, consumer-driven contracts, and schema-compatibility gates localize trust at boundaries.
+- **Evolvability** can be observed: have agents attempt representative changes in a sandbox, then measure success rate, diff size, and regressions.
+- **Other functional and non-functional checks** still matter: stress tests, reliability targets, security testing, and operational readiness.
 
-Looking at all of this Dijkstra's old point still applies: testing shows the presence of bugs, not their absence. You cannot enumerate your way through bad behaviors.
+Looking at all of this, Dijkstra's old point still applies: testing shows the presence of bugs, not their absence. You cannot enumerate your way through every bad behavior.
 
-Requirements, acceptance criteria, security controls should be traceable to tests or to another justified verification method. Review does not disappear; it shifts. The question is whether it takes less time, or merely changes form. For some products, a small set of well-understood indicators may support deployment decisions. Some products we can also rollback quickly in case of failure. Others require deeper, domain-specific review.
-It looks that this field might evolve, as it demands for some recipes, frameworks, that says how confident are we about the generated code. Many of the relevant indicators and methods already exist, though new ones will emerge.
+Requirements, acceptance criteria, and security controls should be traceable to tests or another justified verification method. Review does not disappear; it shifts. The question is whether it takes less time or merely changes form.
 
-I think before trust was not carried solely by indicators alone — there was an author,
-engineers have a stake: reputation. This made engineers conservative — risky changes were approached
-carefully, or not at all. Do agents have these properties? For me looks agents are fearless: they attempt the refactor no human would touch and ship partially verified risky changes with the same
-confidence. The weight incentives used to carry now falls on indicators — and
-accountability stays with whoever approves.
+For some products, a small set of well-understood indicators and fast rollback may support deployment decisions. Others require deeper, domain-specific review. We need practical frameworks that state what evidence is sufficient for a given level of risk. Many of the ingredients already exist, and new ones will emerge.
+
+Before, trust was not carried by indicators alone. There was an author, and engineers had a stake: their reputation. That made people conservative: risky changes were approached carefully, or not at all.
+
+Agents do not bear personal or organizational consequences unless people design controls around them. They may attempt the refactor no human wants to touch and present a partially verified change with the same confidence. The weight that incentives once carried now falls on our indicators. Accountability remains with whoever approves.
+
+## Example: A Payment Flow
+
+An AI-generated change to a payment flow needs more than high test coverage. Before deployment, the team may require contract tests against the payment provider, authorization and idempotency checks, negative tests proving that duplicate requests cannot charge twice, audit-log verification, and a staged rollout with monitoring and rollback.
+
+An internal reporting screen with no sensitive data and an easy rollback may need a much smaller evidence set. The difference is not code quality alone; it is the cost of being wrong.
+
+## Critique / Red Flags
+
+- "Uncle Bob's take" is an attention-grabbing opening, but name or link the specific claim if the post is intended to stand up outside your immediate network.
+- The post asks about universal indicators, then correctly argues that risk and domain matter. Make that tension explicit: a universal *framework* may be realistic; universal *thresholds* probably are not.
+- The payment-flow example makes the risk distinction concrete, but it also adds length. Keep it only if the post can remain a long-form LinkedIn post; otherwise, turn it into the first comment.
+- The post is still dense for LinkedIn. If reach is the priority, move the full verification list into a follow-up post or a comment and retain only the three strongest examples here.
