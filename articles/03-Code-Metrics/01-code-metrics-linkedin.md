@@ -22,7 +22,7 @@ What constraints and indicators comes to mind.
 Looking at all of this Dijkstra's old point still applies: testing shows the presence of bugs, not their absence. You cannot enumerate your way through bad behaviors.
 
 Requirements, acceptance criteria, security controls should be traceable to tests or to another justified verification method. Review does not disappear; it shifts. The question is whether it takes less time, or merely changes form. For some products, a small set of well-understood indicators may support deployment decisions. Some products we can also rollback quickly in case of failure. Others require deeper, domain-specific review.
-It looks that this field might evolve, as it asks for some recipes, that says how confident are we about the generated code.  Many of the relevant indicators and methods already exist, though new ones will emerge.
+It looks that this field might evolve, as it demands for some recipes, frameworks, that says how confident are we about the generated code. Many of the relevant indicators and methods already exist, though new ones will emerge.
 
 I think before trust was not carried solely by indicators alone — there was an author,
 engineers have a stake: reputation. This made engineers conservative — risky changes were approached
