@@ -14,7 +14,7 @@ What constraints and indicators do we have?
 Are these enough? Should be there now more? 
 How we should implement them?
 
-An agent that writes both the code and the tests is grading its own work. Coverage, mutation scores are trivially satisfiable. The moment a metric becomes a deployment gate, the generator will optimize for it — Goodhart's law. Whatever produced a code must never be the source of evidence about it.
+An agent that writes both the code and the tests is grading its own work. Coverage, mutation scores are satisfiable. The moment a metric becomes a deployment gate, the generator will optimize for it — Goodhart's law. Whatever produced a code must never be the source of evidence about it.
 
 Review does not disappear; it shifts. It shifts to reviewing acceptance criteria, constraints, indicators, specificaitons, evidances etc. The question is whether it takes less time or merely changes form.
 
