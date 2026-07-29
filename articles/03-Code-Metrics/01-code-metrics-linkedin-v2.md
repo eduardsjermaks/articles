@@ -11,10 +11,11 @@ What constraints and indicators do we have?
 - **Structural controls** least privilege, restricted egress, sandboxing, tests, so that "credentials never leave the system" with external unverified calls.
 - **Other functional and non-functional checks** stress tests, reliability targets, security testing and many more
 
-Are these enough? Should be there now more? 
+Are these enough? 
+Should be there now more? 
 How we should implement them?
 
-An agent that writes both the code and the tests is grading its own work. Coverage, mutation scores are satisfiable. The moment a metric becomes a deployment gate, the generator will optimize for it — Goodhart's law. Whatever produced a code must never be the source of evidence about it.
+An agent that writes both the code and the tests is grading its own work. Coverage and mutation scores are satisfiable. The moment a metric becomes a deployment gate, the generator will optimize for it — Goodhart's law. Whatever produced a change must never be the sole source of evidence about it. There should separate process set for this. 
 
 Review does not disappear; it shifts. It shifts to reviewing acceptance criteria, constraints, indicators, specificaitons, evidances etc. The question is whether it takes less time or merely changes form.
 
@@ -24,5 +25,5 @@ Agents do not bear personal or organizational consequences unless people design 
 
 For some products, a small set of well-understood indicators and fast rollback may support deployment decisions. Others require deeper, domain-specific review. 
 
-I think this field still have a room to evolve. There can classification of change where blast radius blast radius (how much breaks if it's wrong), reversibility (how fast you can undo it). Based on some classification we can deduct what evidences are needed there. Having guidelines and recipies could help. 
+I think this field still has room to evolve. We could classify changes by blast radius (how much breaks if it is wrong), reversibility (how quickly we can undo it). From that classification, we can define the evidence required for deployment. Clear guidelines and recipes could help.
 
